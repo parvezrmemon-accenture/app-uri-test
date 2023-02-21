@@ -3,10 +3,6 @@
 
 <head>
     <title>iOS Automatic Deep Linking</title>
-    <link rel="manifest" href="./manifest.json">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"
-        integrity="sha512-nhY06wKras39lb9lRO76J4397CH1XpRSLfLJSftTeo3+q2vP7PaebILH9TqH+GRpnOhfAGjuYMVmVTOZJ+682w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -42,18 +38,6 @@
     //     document.body.removeChild(iframe);
     // }, 1000); // Set the timeout to 1 second (1000 milliseconds)
 
-</script>
-
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js')
-            .then(function (registration) {
-                console.log('Service worker registered with scope:', registration.scope);
-            })
-            .catch(function (error) {
-                console.error('Service worker registration failed:', error);
-            });
-    }
 </script>
 
 

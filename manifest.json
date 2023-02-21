@@ -1,20 +1,17 @@
 {
-    "name": "My PWA",
-    "short_name": "My PWA",
+    "name": "app-uri-test",
+    "short_name": "2048",
+    "id": "/app-uri-test/",
+    "start_url": "/app-uri-test/",
+    "display": "standalone",
+    "background_color": "#FFE9D2",
+    "theme_color": "#FFE1C4",
+    "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "icon-192x192.png",
-        "type": "image/png",
-        "sizes": "192x192"
-      },
-      {
-        "src": "icon-512x512.png",
-        "type": "image/png",
-        "sizes": "512x512"
+        "type":"image/svg+xml",
+        "purpose": "any",
+        "sizes": "48x48 72x72 96x96 128x128 152x152 192x192 384x384 256x256 512x512"
       }
-    ],
-    "start_url": "/index.html",
-    "display": "standalone",
-    "theme_color": "#2196f3",
-    "background_color": "#2196f3"
-  }  
+    ]
+  }
