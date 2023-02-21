@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>iOS Automatic Deep Linking</title>
+</head>
+
+<body>
+    <!-- <iframe src="msteams://" width="0" height="0"></iframe> -->
+</body>
+
+<script>
+
+    // Define the msteams:// protocol URI
+    const teamsURI = 'msteams://';
+    try {
+        const iframe = document.createElement('iframe');
+        iframe.src = teamsURI;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        setTimeout(() => {
+            document.body.removeChild(iframe);
+        }, 2000); // Set a timeout to remove the iframe after 2 seconds
+    } catch (e) {
+        // Error handling
+        console.error('Failed to launch the Teams app', e);
+    }
+
+
+    // Attempt to launch the msteams:// protocol
+    // const iframe = document.createElement('iframe');
+    // iframe.style.display = 'none';
+    // iframe.src = teamsURI;
+    // document.body.appendChild(iframe);
+    // setTimeout(() => {
+    //     document.body.removeChild(iframe);
+    // }, 1000); // Set the timeout to 1 second (1000 milliseconds)
+
+</script>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>iOS Automatic Deep Linking</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+        integrity="sha512-nhY06wKras39lb9lRO76J4397CH1XpRSLfLJSftTeo3+q2vP7PaebILH9TqH+GRpnOhfAGjuYMVmVTOZJ+682w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function test() {
+            // Define the app's URI and website URL
+            const appURI = 'ms-teams1://';
+            const websiteURL = 'https://your-website-url.com';
+
+
+
+
+            // Attempt to launch the app using its URI scheme
+            window.location.href = appURI;
+            (hidden || document.webkitHidden)
+            // Set a timeout to check if the app was launched
+            const checkAppInterval = setInterval(function () {
+                if (document.hidden || document.webkitHidden) {
+                    clearInterval(checkAppInterval); // Clear the interval if the app is launched
+                } else {
+                    window.location.href = websiteURL; // Redirect to the website URL if the app is not launched
+                }
+            }, 1000); // Set the interval to 1 second (1000 milliseconds)
+
+        }
+        test();
+    </script>
+    <style type="text/css">
+        .twitter-detect {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Website content.</p>
+</body>
+
+</html> -->

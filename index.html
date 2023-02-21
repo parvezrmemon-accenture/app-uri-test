@@ -93,22 +93,25 @@
 </body>
 
 <script>
-
-    function launchApp(customUri, webURL) {
-        window.location.replace(customUri);
-        this.timer = setTimeout(this.openWebApp(webURL), 1000);
-    }
-
-    function openWebApp(webURL) {
-        window.location.replace(webURL);
-    }
-
     function test() {
-        const customUri = 'svmxgo://';
+        const customUri = 'ms-teams://';
         const appScheme = customUri;
         const webURL = "https://www.google.com/"
+        // window.open('file:///C:/Users/parvez.r.memon/Desktop/My%20Work/app-uri-test/twitter.html', '_blank', 'noopener, noreferrer');
+        // return false;
+        // window.open(customUri, '_blank', 'noopener, noreferrer');
+        window.location.href = appScheme;
 
-        launchApp(customUri, webURL);
+        // Wait for a short period of time and check if the app was opened
+        setTimeout(function () {
+            // If the app was not opened, redirect the user to the app store or web URL
+            // Testing
+            if (document.hidden || document.webkitHidden) {
+                window.location.href = webURL;
+            } else {
+                document.location = webURL;
+            }
+        }, 5000);
     }
 </script>
 
