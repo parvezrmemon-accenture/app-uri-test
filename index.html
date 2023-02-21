@@ -125,18 +125,15 @@
         //     }
         // });
 
-
-        // window.open('file:///C:/Users/parvez.r.memon/Desktop/My%20Work/app-uri-test/twitter.html', '_blank', 'noopener, noreferrer');
-        // return false;
         window.open(customUri, '_self', 'noopener, noreferrer');
 
         // Wait for a short period of time and check if the app was opened
         setTimeout(function () {
+            alert(document.hasFocus())
             // If the app was not opened, redirect the user to the app store or web URL
             // Testing
-            if (document.hidden || document.webkitHidden) {
-                window.open(webURL, '_self', 'noopener, noreferrer');
-            } else {
+            // if (document.hidden || document.webkitHidden) {
+            if (document.hasFocus()) {
                 window.open(webURL, '_self', 'noopener, noreferrer');
             }
         }, 10000);
