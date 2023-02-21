@@ -12,7 +12,7 @@
 <script>
 
     // Define the msteams:// protocol URI
-    const teamsURI = 'msteams://';
+    const teamsURI = 'svmxgo://';
     try {
         const iframe = document.createElement('iframe');
         iframe.src = teamsURI;
@@ -24,6 +24,8 @@
     } catch (e) {
         // Error handling
         console.error('Failed to launch the Teams app', e);
+        const webURL = "https://www.google.com/"
+        window.location.href = webURL;
     }
 
 
