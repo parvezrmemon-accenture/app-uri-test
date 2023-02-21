@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <link rel="manifest" href="./manifest.json">
+    <script src="./sw.js" referrerpolicy="no-referrer"></script>
     <style>
         .commonPadding {
             padding-left: 10px;
@@ -94,6 +96,17 @@
 </body>
 
 <script>
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(function (registration) {
+                console.log('Service worker registered with scope:', registration.scope);
+            })
+            .catch(function (error) {
+                console.error('Service worker registration failed:', error);
+            });
+    }
+
     function test() {
         const customUri = document.getElementById('appUri').value || 'svmxgo://';
         const appScheme = customUri;
@@ -105,6 +118,13 @@
         }, 1000); // Wait for 1 second and then redirect to the web version
         window.addEventListener('blur', function () {
             clearTimeout(timeout); // Cancel the timeout if the external app was successfully launched
+        });
+        let count = 1;
+        window.addEventListener('focus', function () {
+            if (count === 1) {
+                alert('check')
+                count = 2;
+            }
         });
 
 
