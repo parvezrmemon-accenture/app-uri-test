@@ -25,31 +25,72 @@
 </body>
 
 <script>
+    const OPEN_APP_TIMEOUT = 6000; // Set timeout to 2 seconds
+
     function test() {
+        // Trigger the native app to open here
         const customUri = document.getElementById('appUri').value || 'svmxgo://';
+        const webURL = "https://www.google.com/"
 
-        window.open(customUri, '_self', 'noopener, noreferrer');
-
-        setTimeout(function () {
-            alert(document.visibilityState)
-        }, 5000)
+        // window.location = customUri;
+        window.location.replace(customUri);
     }
+
     function handleBlur() {
-        console.log('Native app may have been opened');
+        // This event listener fires when the app is opened or an error prompt is shown
+        const startTime = Date.now();
         window.removeEventListener('blur', handleBlur);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-    }
 
-    function handleVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-            console.log('Error message was shown');
-            window.removeEventListener('blur', handleBlur);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        }
+        // Set a timer to check the visibility state after the app is opened or error prompt is shown
+        setTimeout(() => {
+            if (document.visibilityState === 'visible' && document.hasFocus()) {
+                // User did not open the native app
+                alert('User did not open the native app in here');
+            } else {
+                // User may have opened the native app, check again after the prompt is dismissed
+                const promptDismissedHandler = () => {
+                    if (document.visibilityState === 'visible' && document.hasFocus()) {
+                        // User did not open the native app
+                        alert('User did not open the native app');
+                    } else {
+                        // User opened the native app and then returned to the browser
+                        alert('User opened the native app');
+                    }
+                    document.removeEventListener('visibilitychange', promptDismissedHandler);
+                };
+
+                document.addEventListener('visibilitychange', promptDismissedHandler);
+            }
+        }, OPEN_APP_TIMEOUT);
     }
 
     window.addEventListener('blur', handleBlur);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // function test() {
+    //     const customUri = document.getElementById('appUri').value || 'svmxgo://';
+
+    //     window.open(customUri, '_self', 'noopener, noreferrer');
+
+    //     setTimeout(function () {
+    //         alert(document.visibilityState)
+    //     }, 5000)
+    // }
+    // function handleBlur() {
+    //     console.log('Native app may have been opened');
+    //     window.removeEventListener('blur', handleBlur);
+    //     document.removeEventListener('visibilitychange', handleVisibilityChange);
+    // }
+
+    // function handleVisibilityChange() {
+    //     if (document.visibilityState === 'visible') {
+    //         console.log('Error message was shown');
+    //         window.removeEventListener('blur', handleBlur);
+    //         document.removeEventListener('visibilitychange', handleVisibilityChange);
+    //     }
+    // }
+
+    // window.addEventListener('blur', handleBlur);
+    // document.addEventListener('visibilitychange', handleVisibilityChange);
 
 </script>
 
