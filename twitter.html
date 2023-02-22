@@ -11,22 +11,25 @@
 
 <script>
 
+    setTimeout(function () { window.location = "https://itunes.apple.com/appdir"; }, 25);
+    window.location = "msteams://";
+
     // Define the msteams:// protocol URI
-    const teamsURI = 'svmxgo://';
-    try {
-        const iframe = document.createElement('iframe');
-        iframe.src = teamsURI;
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 2000); // Set a timeout to remove the iframe after 2 seconds
-    } catch (e) {
-        // Error handling
-        console.error('Failed to launch the Teams app', e);
-        const webURL = "https://www.google.com/"
-        window.location.href = webURL;
-    }
+    // const teamsURI = 'svmxgo://';
+    // try {
+    //     const iframe = document.createElement('iframe');
+    //     iframe.src = teamsURI;
+    //     iframe.style.display = 'none';
+    //     document.body.appendChild(iframe);
+    //     setTimeout(() => {
+    //         document.body.removeChild(iframe);
+    //     }, 2000); // Set a timeout to remove the iframe after 2 seconds
+    // } catch (e) {
+    //     // Error handling
+    //     console.error('Failed to launch the Teams app', e);
+    //     const webURL = "https://www.google.com/"
+    //     window.location.href = webURL;
+    // }
 
 
     // Attempt to launch the msteams:// protocol
