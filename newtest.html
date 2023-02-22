@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="manifest" href="./manifest.json">
+    <script src="./sw.js" referrerpolicy="no-referrer"></script>
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+    <style>
+        .commonPadding {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="commonPadding">
+        <h2>
+            7. Redirecting to download if App is not installed
+        </h2>
+        <button data-testid="ifAppInstalledTestBtn" onClick="test();">com.salesforce.fieldservice://; Native
+            App</button>
+    </div>
+    <input type="text" value="" id="appUri" />
+</body>
+
+<script>
+    function test() {
+        const customUri = document.getElementById('appUri').value || 'svmxgo://';
+
+        window.open(customUri, '_self', 'noopener, noreferrer');
+
+        setTimeout(function () {
+            alert(document.visibilityState)
+        }, 5000)
+    }
+    function handleBlur() {
+        console.log('Native app may have been opened');
+        window.removeEventListener('blur', handleBlur);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }
+
+    function handleVisibilityChange() {
+        if (document.visibilityState === 'visible') {
+            console.log('Error message was shown');
+            window.removeEventListener('blur', handleBlur);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }
+    }
+
+    window.addEventListener('blur', handleBlur);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+</script>
+
+</html>

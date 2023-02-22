@@ -110,6 +110,20 @@
         const appScheme = customUri;
         const webURL = "https://www.google.com/"
 
+        window.location = customUri;
+
+        setTimeout(function () {
+            alert(document.hasFocus())
+            // alert(document.visibilityState === 'visible')
+            if (document.visibilityState === 'visible') {
+                window.location = webURL;
+            }
+            // If the app was not opened, redirect the user to the app store or web URL
+            // Testing
+            // if (document.hidden || document.webkitHidden) {
+            // window.location = webURL;
+        }, 2000);
+
         // window.location = customUri;
         // const timeout = setTimeout(function () {
         //     window.location = webURL;
@@ -125,24 +139,26 @@
         //     }
         // });
 
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            window.open(customUri, '_self', 'noopener, noreferrer');
+        // if (window.matchMedia('(display-mode: standalone)').matches) {
+        // window.open(customUri, '_self', 'noopener, noreferrer');
 
-            // Wait for a short period of time and check if the app was opened
-            setTimeout(function () {
-                alert(document.hasFocus())
-                // If the app was not opened, redirect the user to the app store or web URL
-                // Testing
-                // if (document.hidden || document.webkitHidden) {
-                if (document.hasFocus()) {
-                    window.open(webURL, '_self', 'noopener, noreferrer');
-                }
-            }, 10000);
-        }
-        else {
-            window.open(customUri, '_blank', 'noopener, noreferrer');
-        }
+        // // Wait for a short period of time and check if the app was opened
+        // setTimeout(function () {
+        //     alert(document.hasFocus())
+        //     alert(window.location.href)
+        //     // If the app was not opened, redirect the user to the app store or web URL
+        //     // Testing
+        //     // if (document.hidden || document.webkitHidden) {
+        //     if (document.hasFocus()) {
+        //         window.open(webURL, '_self', 'noopener, noreferrer');
+        //     }
+        // }, 10000);
+        // }
+        // else {
+        //     window.open(customUri, '_blank', 'noopener, noreferrer');
+        // }
     }
+
 </script>
 
 </html>
