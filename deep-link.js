@@ -93,6 +93,7 @@
 
   // Parse a single element
   var parseElement = function (el) {
+    console.log("parse");
     var clicked,
       timeout,
       OS = getUserAgent(),
@@ -104,13 +105,15 @@
         el.getAttribute("data-store-" + OSAttr) ||
         el.getAttribute("data-store"),
       scheme = el.getAttribute("data-android-scheme");
+    console.log("until here");
 
     if (!app) return;
     if (!href) el.setAttribute("href", app);
-
+    console.log(OS, app);
     if (OS && app) {
       // Hijack click event
       el.onclick = function (e) {
+        console.log("clicked");
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -133,6 +136,7 @@
           timeout = null;
 
           // Has the user left the screen? ABORT!
+          console.log("lets check this", now, start, delay);
           if (now - start >= delay * 2) return;
 
           // Open store or original link
@@ -151,7 +155,7 @@
     }
 
     // Triggered on blur
-    visibly.onHidden(function () {
+    window.addEventListener("blur", function () {
       if (!clicked || !timeout) return;
 
       // Reset everything
