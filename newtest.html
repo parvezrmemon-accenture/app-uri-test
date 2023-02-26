@@ -37,6 +37,7 @@
     }
 
     function handleBlur() {
+        console.log('fired')
         // This event listener fires when the app is opened or an error prompt is shown
         const startTime = Date.now();
         window.removeEventListener('blur', handleBlur);

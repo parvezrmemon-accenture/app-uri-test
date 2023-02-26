@@ -113,9 +113,10 @@
         window.location = customUri;
 
         setTimeout(function () {
-            console.log(document.hasFocus())
+            // alert(document.visibilityState)
+            alert(document.hasFocus())
             // alert(document.visibilityState === 'visible')
-            if (document.visibilityState === 'visible') {
+            if (document.hasFocus()) {
                 window.location = webURL;
             }
             // If the app was not opened, redirect the user to the app store or web URL
