@@ -87,6 +87,9 @@
             <a href=externalLink>Enable NBNCO</a>
         </div>
         <div class="commonPadding">
+            <a href="javascript:openSmallWin();"> SEARCH ENGINE </a>
+        </div>
+        <div class="commonPadding">
             <h2>
                 7. Redirecting to download if App is not installed
             </h2>
@@ -103,6 +106,10 @@
         navigator.serviceWorker.register('/app-uri-test/sw.js')
             .then(reg => console.log('service worker registered'))
             .catch(err => console.log('service worker not registered', err))
+    }
+
+    function openSmallWin() {
+        window.open('https://www.computerhope.com/cgi-bin/search.cgi', 'EANITHING', 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
     }
 
     function test() {
