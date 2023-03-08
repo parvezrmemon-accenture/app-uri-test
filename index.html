@@ -87,7 +87,19 @@
             <a href=externalLink>Enable NBNCO</a>
         </div>
         <div class="commonPadding">
-            <a href="javascript:openSmallWin();"> SEARCH ENGINE </a>
+            <a href="javascript:openSmallWin('https://www.computerhope.com/cgi-bin/search.cgi');"> SEARCH ENGINE </a>
+        </div>
+        <div class="commonPadding">
+            <a href="javascript:openSmallWin('https://ebusiness.nbnco.net.au/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE');"> e
+                Business </a>
+        </div>
+        <div class="commonPadding">
+            <a href="javascript:openSmallWin('https://serkohrgv2.au.hrgworldwide.com/login/AUNBNCO');">
+                Zeno </a>
+        </div>
+        <div class="commonPadding">
+            <a href="javascript:openSmallWin('https://go.servicemax.io/calendar');">
+                SMAX Go </a>
         </div>
         <div class="commonPadding">
             <h2>
@@ -107,9 +119,12 @@
             .then(reg => console.log('service worker registered'))
             .catch(err => console.log('service worker not registered', err))
     }
+    let urlName = 1;
 
-    function openSmallWin() {
-        window.open('https://www.computerhope.com/cgi-bin/search.cgi', 'EANITHING', 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
+    function openSmallWin(url) {
+        window.open(url, urlName, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
+        urlName++;
+        console.log('urlName', urlName)
     }
 
     function test() {
