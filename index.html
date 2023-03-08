@@ -87,18 +87,19 @@
             <a href=externalLink>Enable NBNCO</a>
         </div>
         <div class="commonPadding">
-            <a href="javascript:openSmallWin('https://www.computerhope.com/cgi-bin/search.cgi');"> SEARCH ENGINE </a>
+            <a href="javascript:openSmallWin('https://nbnco.appiancloud.com/suite/sites/service-delivery-one', 1);">
+                Appian </a>
         </div>
         <div class="commonPadding">
-            <a href="javascript:openSmallWin('https://ebusiness.nbnco.net.au/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE');"> e
+            <a href="javascript:openSmallWin('https://ebusiness.nbnco.net.au/OA_HTML/OA.jsp?OAFunc=OAHOMEPAGE', 2);"> e
                 Business </a>
         </div>
         <div class="commonPadding">
-            <a href="javascript:openSmallWin('https://serkohrgv2.au.hrgworldwide.com/login/AUNBNCO');">
+            <a href="javascript:openSmallWin('https://serkohrgv2.au.hrgworldwide.com/login/AUNBNCO', 3);">
                 Zeno </a>
         </div>
         <div class="commonPadding">
-            <a href="javascript:openSmallWin('https://go.servicemax.io/calendar');">
+            <a href="javascript:openSmallWin('https://go.servicemax.io/calendar', 4);">
                 SMAX Go </a>
         </div>
         <div class="commonPadding">
@@ -121,10 +122,8 @@
     }
     let urlName = 1;
 
-    function openSmallWin(url) {
-        window.open(url, urlName, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
-        urlName++;
-        console.log('urlName', urlName)
+    function openSmallWin(url, name) {
+        window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
     }
 
     function test() {
