@@ -33,39 +33,38 @@
         const webURL = "https://www.google.com/"
 
         // window.location = customUri;
-        window.location.replace(customUri);
-    }
+        window.location = customUri;
 
-    function handleBlur() {
-        console.log('fired')
-        // This event listener fires when the app is opened or an error prompt is shown
-        const startTime = Date.now();
-        window.removeEventListener('blur', handleBlur);
-
-        // Set a timer to check the visibility state after the app is opened or error prompt is shown
-        setTimeout(() => {
-            if (document.visibilityState === 'visible' && document.hasFocus()) {
-                // User did not open the native app
-                alert('User did not open the native app in here');
-            } else {
-                // User may have opened the native app, check again after the prompt is dismissed
-                const promptDismissedHandler = () => {
-                    if (document.visibilityState === 'visible' && document.hasFocus()) {
-                        // User did not open the native app
-                        alert('User did not open the native app');
-                    } else {
-                        // User opened the native app and then returned to the browser
-                        alert('User opened the native app');
+        setTimeout(function () {
+            // Check the visibility state of the page
+            if (document.visibilityState === "hidden") {
+                // The page is currently hidden, which may indicate that the user has switched to a native app
+                // Listen for the blur event on the window to detect when the browser window loses focus
+                window.addEventListener("blur", function (event) {
+                    // When the window loses focus, check the visibility state again to confirm that the page is hidden
+                    if (document.visibilityState === "hidden") {
+                        // The page is hidden, so the user may have switched to a native app
+                        // Handle the native app switch here
+                        console.log("User switched to native app");
                     }
-                    document.removeEventListener('visibilitychange', promptDismissedHandler);
-                };
-
-                document.addEventListener('visibilitychange', promptDismissedHandler);
+                });
             }
-        }, OPEN_APP_TIMEOUT);
+            else {
+                // The page is currently visible
+                // Listen for the focus event on the window to detect when the browser window regains focus
+                window.addEventListener("focus", function (event) {
+                    // When the window regains focus, check the visibility state again to confirm that the page is visible
+                    if (document.visibilityState === "visible") {
+                        // The page is visible again, so the user may have returned from a native app
+                        // Handle the return from native app here
+                        console.log("User returned from native app");
+                    }
+                });
+            }
+
+        }, 10000);
     }
 
-    window.addEventListener('blur', handleBlur);
 
     // function test() {
     //     const customUri = document.getElementById('appUri').value || 'svmxgo://';
