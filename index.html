@@ -122,13 +122,13 @@
             .then(reg => console.log('service worker registered'))
             .catch(err => console.log('service worker not registered', err))
     }
-    let myWindow;
+    var myWindow;
 
     function openMinWin() {
         console.log(myWindow)
-        if (myWindow && !myWindow.document) {
+        if (myWindow && !myWindow.closed) {
             setTimeout(() => {
-                window.blur();
+                alert('Already opened');
                 myWindow.focus(); // focus on existing window
             }, 100); // delay the call to focus by 100 milliseconds
 
