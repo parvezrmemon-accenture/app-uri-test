@@ -126,11 +126,14 @@
 
     function openMinWin() {
         console.log(myWindow)
-        if (myWindow && !myWindow.closed) {
-            alert('here?');
-            myWindow.focus(); // focus on existing window
+        if (myWindow && !myWindow.document) {
+            setTimeout(() => {
+                window.blur();
+                myWindow.focus(); // focus on existing window
+            }, 100); // delay the call to focus by 100 milliseconds
+
         } else {
-            myWindow = window.open("https://google.com", "Ratting", "width=550,height=170,0,top=260,status=0,");
+            myWindow = window.open("https://www.plus2net.com/javascript_tutorial/window-close.php", "Ratting", "width=550,height=170,0,top=260,status=0,");
         }
     }
 
