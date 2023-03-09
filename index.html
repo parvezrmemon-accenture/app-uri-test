@@ -123,6 +123,7 @@
             .catch(err => console.log('service worker not registered', err))
     }
     var myWindow;
+    var openedWindows = {}
 
     function openMinWin() {
         console.log(myWindow)
@@ -138,7 +139,20 @@
     }
 
     function openSmallWin(url, name) {
-        window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
+        const isAlreadyOpened = openedWindows[name];
+        if (isAlreadyOpened && !isAlreadyOpened.window.closed) {
+            setTimeout(() => {
+                alert('Already opened');
+                isAlreadyOpened.window.focus(); // focus on existing window
+            }, 100); // delay the call to focus by 100 milliseconds
+
+        } else {
+            let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
+            const newWinObj = { [name]: newWindow }
+            openedWindows = { ...openedWindows, ...newWinObj }
+        }
+
+
     }
 
     function test() {
