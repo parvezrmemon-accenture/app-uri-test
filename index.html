@@ -140,7 +140,9 @@
 
     function openSmallWin(url, name) {
         const isAlreadyOpened = openedWindows[name];
-        if (isAlreadyOpened && !isAlreadyOpened.window.closed) {
+        console.log('isAlreadyOpened', isAlreadyOpened)
+
+        if (isAlreadyOpened && !isAlreadyOpened.closed) {
             setTimeout(() => {
                 alert('Already opened');
                 isAlreadyOpened.window.focus(); // focus on existing window
@@ -151,8 +153,6 @@
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
         }
-
-
     }
 
     function test() {
