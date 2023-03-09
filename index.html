@@ -110,6 +110,8 @@
                 App</button>
         </div>
         <input type="text" value="" id="appUri" />
+
+        <button onClick="openMinWin();">Open Min windows</button>
     </div>
 </body>
 
@@ -120,7 +122,17 @@
             .then(reg => console.log('service worker registered'))
             .catch(err => console.log('service worker not registered', err))
     }
-    let urlName = 1;
+    let myWindow;
+
+    function openMinWin() {
+        console.log(myWindow)
+        if (myWindow && !myWindow.closed) {
+            alert('here?');
+            myWindow.focus(); // focus on existing window
+        } else {
+            myWindow = window.open("https://google.com", "Ratting", "width=550,height=170,0,top=260,status=0,");
+        }
+    }
 
     function openSmallWin(url, name) {
         window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no, width=300, height=300');
