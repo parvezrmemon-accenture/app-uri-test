@@ -85,6 +85,7 @@
 
         } else {
             let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
+            setTimeout(function () { newWindow.document.title = 'my new title'; }, 1000);
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
         }
