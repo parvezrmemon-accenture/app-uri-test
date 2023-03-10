@@ -75,8 +75,11 @@
 
     function openSmallWin(url, name) {
         const isAlreadyOpened = openedWindows[name];
-        console.log('isAlreadyOpened', isAlreadyOpened)
 
+        if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
+            alert("Yes it's PWA")
+            alert(getOperatingDevice())
+        }
         if (isAlreadyOpened && !isAlreadyOpened.closed) {
             setTimeout(() => {
                 alert('Already opened');
@@ -99,16 +102,9 @@
         window.location = customUri;
 
         setTimeout(function () {
-            // alert(document.visibilityState)
-            alert(document.hasFocus())
-            // alert(document.visibilityState === 'visible')
             if (document.hasFocus()) {
                 window.location = webURL;
             }
-            // If the app was not opened, redirect the user to the app store or web URL
-            // Testing
-            // if (document.hidden || document.webkitHidden) {
-            // window.location = webURL;
         }, 10000);
 
         // window.location = customUri;
@@ -144,6 +140,32 @@
         // else {
         //     window.open(customUri, '_blank', 'noopener, noreferrer');
         // }
+    }
+
+    function getOperatingDevice() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        let isMobile = false;
+        let device = "Desktop";
+
+        // Windows Phone must come first because its UA also contains "Android"
+        if (/windows phone/i.test(userAgent)) {
+            isMobile = true;
+            device = "Windows Phone";
+        }
+
+        if (/android/i.test(userAgent)) {
+            isMobile = true;
+            device = "Android";
+        }
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            isMobile = true;
+            device = "iOS";
+        }
+        return {
+            isMobile: isMobile,
+            device: device,
+        };
     }
 
 </script>
