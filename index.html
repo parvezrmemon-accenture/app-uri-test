@@ -78,7 +78,7 @@
 
         if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
             alert("Yes it's PWA")
-            alert(getOperatingDevice())
+            alert(getOperatingDevice().device)
         }
         if (isAlreadyOpened && !isAlreadyOpened.closed) {
             setTimeout(() => {
