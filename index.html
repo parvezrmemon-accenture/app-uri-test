@@ -75,6 +75,7 @@
 
     function openSmallWin(url, name) {
         const isAlreadyOpened = openedWindows[name];
+        const urlRel = 'noopener, noreferrer';
 
         if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
             alert("Yes it's PWA")
@@ -87,7 +88,7 @@
             }, 100); // delay the call to focus by 100 milliseconds
 
         } else {
-            let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
+            let newWindow = window.open(url, name, 'noopener, noreferrer,toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
             setTimeout(function () { newWindow.document.title = 'my new title'; }, 1000);
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
