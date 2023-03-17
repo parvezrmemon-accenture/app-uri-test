@@ -48,6 +48,9 @@
         <div class="commonPadding">
             <button onClick="openMinWin();">Open Min windows</button>
         </div>
+        <div class="commonPadding">
+            <button onClick="callIt();">Call It</button>
+        </div>
     </div>
 </body>
 
@@ -85,8 +88,6 @@
             }, false);
         }, 2000)
     }
-
-    callIt();
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/app-uri-test/sw.js')
