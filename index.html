@@ -6,6 +6,7 @@
     <script src="./sw.js" referrerpolicy="no-referrer"></script>
     <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
+    <title>Portal</title>
     <style>
         .commonPadding {
             padding-left: 10px;
@@ -52,6 +53,41 @@
 
 <script>
 
+    function callIt() {
+        console.log('call It')
+        setTimeout(function () {
+            var newTab = window.open("", "Ratting", "width=550,height=170,0,top=260,status=0,");
+            var iframe = newTab.document.createElement('iframe');
+            newTab.document.title = "Testing this"
+            iframe.setAttribute('src', 'https://www.plus2net.com/javascript_tutorial/window-close.php');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            newTab.document.body.appendChild(iframe);
+
+
+            // Listen for messages from the child window
+            window.addEventListener("message", function (event) {
+                // Set the PWA window title to the title received from the child window
+                document.title = event.data.title;
+            }, false);
+
+            // Send a message to the child window to request its title
+            newTab.postMessage("getTitle", "*");
+
+            // Listen for messages from the child window
+            window.addEventListener("message", function (event) {
+                if (event.data.title) {
+                    // Set the child window title to "New Tab Title"
+                    newTab.document.title = "New Tab Title";
+                    // Send a message to the child window to set its title
+                    newTab.postMessage({ title: "New Tab Title" }, "*");
+                }
+            }, false);
+        }, 2000)
+    }
+
+    callIt();
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/app-uri-test/sw.js')
             .then(reg => console.log('service worker registered'))
@@ -70,8 +106,21 @@
 
         } else {
             myWindow = window.open("https://www.plus2net.com/javascript_tutorial/window-close.php", "Ratting", "width=550,height=170,0,top=260,status=0,");
+            myWindow.addEventListener('beforeunload', function () {
+                alert('okay 12')
+                newTab.postMessage({ title: newTab.document.title }, '*');
+            }, false);
         }
     }
+
+    // Listen for messages from the child window
+    window.addEventListener('message', function (event) {
+        alert('okay')
+        // Set the title of the parent window to the title received from the child window
+        document.title = event.data.title;
+    }, false);
+
+    // When the child window loads, send a message containing its title to the parent window
 
     function openSmallWin(url, name) {
         const isAlreadyOpened = openedWindows[name];
@@ -104,6 +153,7 @@
 
         setTimeout(function () {
             if (document.hasFocus()) {
+                // window.location = webURL;
                 window.open(webURL, '_blank');
             }
         }, 10000);
