@@ -51,6 +51,12 @@
         <div class="commonPadding">
             <button onClick="callIt();">Call It</button>
         </div>
+        <div class="commonPadding">
+            <h1>
+                Opened Apps
+            </h1>
+            <div id="openedApps"></div>
+        </div>
     </div>
 </body>
 
@@ -92,12 +98,13 @@
 
     function openSmallWin(url, name) {
         const isAlreadyOpened = openedWindows[name];
+        console.log('are we even here', openedWindows, isAlreadyOpened)
         const urlRel = 'noopener, noreferrer';
 
-        if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
-            alert("Yes it's PWA")
-            alert(getOperatingDevice().device)
-        }
+        // if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
+        // alert("Yes it's PWA")
+        // alert(getOperatingDevice().device)
+        // }
         if (isAlreadyOpened && !isAlreadyOpened.closed) {
             setTimeout(() => {
                 alert('Already opened');
@@ -105,8 +112,11 @@
             }, 100); // delay the call to focus by 100 milliseconds
 
         } else {
-            let newWindow = window.open(url, name, 'noopener, noreferrer,toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
-            setTimeout(function () { newWindow.document.title = 'my new title'; }, 1000);
+            let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
+            newWindow.onunload = function () {
+                alert('Child window has been closed!' + name);
+            }
+
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
         }
@@ -190,17 +200,44 @@
     function callIt() {
         console.log('call It')
         setTimeout(function () {
-            var newTab = window.open("", "Ratting", "width=550,height=170,0,top=260,status=0,");
-            newTab.document.title = "How to do it?";
-            var iframe = newTab.document.createElement('iframe');
-            iframe.setAttribute('src', 'https://www.plus2net.com/javascript_tutorial/window-close.php');
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            newTab.document.body.appendChild(iframe);
+            var newTab = window.open("https://www.plus2net.com/javascript_tutorial/window-close.php", "Ratting", "width=550,height=170,0,top=260,status=0,");
+            newTab.addEventListener('load', function () {
+                newTab.document.title = "How to do it?";
+                var iframe = newTab.document.createElement('iframe');
+                iframe.setAttribute('src', 'https://www.plus2net.com/javascript_tutorial/window-close.php');
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                newTab.document.body.appendChild(iframe);
+            });
+
+            // Listen for the 'message' event on the <iframe>
+            window.addEventListener('message', function (event) {
+                alert('just checking')
+                // Check that the event is coming from the <iframe>
+                if (event.source === iframe.contentWindow) {
+                    // Get the title from the message sent by the <iframe>
+                    var title = event.data.title;
+
+                    // Set the PWA's title to the external website's title
+                    document.title = title;
+                }
+            });
 
         }, 2000)
     }
 
+    function renderOpenedTabs() {
+        const openedApps = document.getElementById('openedApps');
+        var obj = openedWindows
+        openedApps.innerHTML = '';
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var val = obj[key];
+                openedApps.innerHTML += "<img height='50' width='50' src='https://cdn.glitch.me/d0334cc3-be72-47b5-a25f-d3fbe953f5ff%2Fapple-touch-icon.png?v=1636974061118' />";
+            }
+        }
+    }
+
 </script>
 
-</html>
+</html>;
