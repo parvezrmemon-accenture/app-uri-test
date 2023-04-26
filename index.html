@@ -37,6 +37,14 @@
                 SMAX Go </a>
         </div>
         <div class="commonPadding">
+            <a href="javascript:openSmallWin('https://outlook.office365.com/mail/inbox/', 5);">
+                Outlook </a>
+        </div>
+        <div class="commonPadding">
+            <a href="javascript:openSmallWin('https://nbn.workplace.com/', 5);">
+                Workspace </a>
+        </div>
+        <div class="commonPadding">
             <h2>
                 7. Redirecting to download if App is not installed
             </h2>
@@ -49,13 +57,14 @@
             <button onClick="openMinWin();">Open Min windows</button>
         </div>
         <div class="commonPadding">
-            <button onClick="callIt();">Call It</button>
-        </div>
-        <div class="commonPadding">
             <h1>
                 Opened Apps
             </h1>
             <div id="openedApps"></div>
+        </div>
+        <div class="commonPadding">
+            <button id="my-link">Test Link</button>
+            <span id="tooltip" style="display: none;">This is tooltip</span>
         </div>
     </div>
 </body>
@@ -87,16 +96,9 @@
         }
     }
 
-    // Listen for messages from the child window
-    window.addEventListener('message', function (event) {
-        alert('okay')
-        // Set the title of the parent window to the title received from the child window
-        document.title = event.data.title;
-    }, false);
-
     // When the child window loads, send a message containing its title to the parent window
 
-    function openSmallWin(url, name) {
+    function openSmallWin(url = '', name) {
         const isAlreadyOpened = openedWindows[name];
         console.log('are we even here', openedWindows, isAlreadyOpened)
         const urlRel = 'noopener, noreferrer';
@@ -113,12 +115,10 @@
 
         } else {
             let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
-            newWindow.onunload = function () {
-                alert('Child window has been closed!' + name);
-            }
-
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
+
+            x.wins = newWindow
         }
     }
 
@@ -197,33 +197,19 @@
         };
     }
 
-    function callIt() {
-        console.log('call It')
-        setTimeout(function () {
-            var newTab = window.open("https://www.plus2net.com/javascript_tutorial/window-close.php", "Ratting", "width=550,height=170,0,top=260,status=0,");
-            newTab.addEventListener('load', function () {
-                newTab.document.title = "How to do it?";
-                var iframe = newTab.document.createElement('iframe');
-                iframe.setAttribute('src', 'https://www.plus2net.com/javascript_tutorial/window-close.php');
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                newTab.document.body.appendChild(iframe);
-            });
+    setInterval(function () {
+        console.log('called');
+        renderOpenedTabs();
+    }, 5000)
 
-            // Listen for the 'message' event on the <iframe>
-            window.addEventListener('message', function (event) {
-                alert('just checking')
-                // Check that the event is coming from the <iframe>
-                if (event.source === iframe.contentWindow) {
-                    // Get the title from the message sent by the <iframe>
-                    var title = event.data.title;
-
-                    // Set the PWA's title to the external website's title
-                    document.title = title;
-                }
-            });
-
-        }, 2000)
+    function openExisting(name) {
+        const isAlreadyOpened = openedWindows[name];
+        if (isAlreadyOpened && !isAlreadyOpened.closed) {
+            setTimeout(() => {
+                alert('Already opened');
+                isAlreadyOpened.window.focus(); // focus on existing window
+            }, 100); // delay the call to focus by 100 milliseconds
+        }
     }
 
     function renderOpenedTabs() {
@@ -233,10 +219,76 @@
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var val = obj[key];
-                openedApps.innerHTML += "<img height='50' width='50' src='https://cdn.glitch.me/d0334cc3-be72-47b5-a25f-d3fbe953f5ff%2Fapple-touch-icon.png?v=1636974061118' />";
+                console.log(key, val);
+                if (!val.closed) {
+                    openedApps.innerHTML += "<a href='javascript:openExisting(\"" + key + "\");'><img height='50' width='50' src='https://cdn.glitch.me/d0334cc3-be72-47b5-a25f-d3fbe953f5ff%2Fapple-touch-icon.png?v=1636974061118' /></a>";
+                }
             }
         }
     }
+
+    x = {
+        aInternal: 10,
+        aListener: function (val) { },
+        winsInternal: {},
+        winsListener: function (val) { },
+        set a(val) {
+            this.aInternal = val;
+            this.aListener(val);
+        },
+        get a() {
+            return this.aInternal;
+        },
+
+        set wins(val) {
+            this.winsInternal = val;
+            this.winsListener(val);
+        },
+        get wins() {
+            return this.winsInternal;
+        },
+        registerListener: function (listener) {
+            this.aListener = listener;
+            this.winsListener = listener;
+        }
+    }
+    x.registerListener(function (val) {
+        console.log("Someone changed the value of x.a to " + val);
+    });
+    x.a = 42;
+
+    var linkElement = document.getElementById('my-link');
+    var call = true;
+
+    // Add touchstart event listener
+    linkElement.addEventListener('touchstart', function (event) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Set a timeout function to show the description after 500ms
+        this.timeoutId = setTimeout(function () {
+            console.log('Long Pressed');
+            document.getElementById("tooltip").style.display = 'block';
+            call = false;
+        }, 500);
+    });
+
+    // Add touchend event listener
+    linkElement.addEventListener('touchend', function (event) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Clear the timeout if it has not been triggered yet
+        clearTimeout(this.timeoutId);
+
+        if (call) {
+            console.log('Short Pressed')
+            // Trigger the link behavior
+            window.open("https://portal.accenture.com/", '_bank');
+        }
+    });
+
+
 
 </script>
 
