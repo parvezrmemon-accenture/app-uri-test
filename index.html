@@ -63,7 +63,8 @@
             <div id="openedApps"></div>
         </div>
         <div class="commonPadding">
-            <button id="my-link">Test Link</button>
+            <img id="my-link" height='50' width='50'
+                src='https://cdn.glitch.me/d0334cc3-be72-47b5-a25f-d3fbe953f5ff%2Fapple-touch-icon.png?v=1636974061118' />
             <span id="tooltip" style="display: none;">This is tooltip</span>
         </div>
     </div>
@@ -262,6 +263,7 @@
 
     // Add touchstart event listener
     linkElement.addEventListener('touchstart', function (event) {
+        call = true;
         // Prevent the default link behavior
         event.preventDefault();
 
