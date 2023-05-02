@@ -63,7 +63,7 @@
             <div id="openedApps"></div>
         </div>
         <div class="commonPadding">
-            <img id="my-link" height='50' width='50'
+            <img id="my-link" height="60" width="60"
                 src='https://cdn.glitch.me/d0334cc3-be72-47b5-a25f-d3fbe953f5ff%2Fapple-touch-icon.png?v=1636974061118' />
             <span id="tooltip" style="display: none;">This is tooltip</span>
         </div>
@@ -115,7 +115,7 @@
             }, 100); // delay the call to focus by 100 milliseconds
 
         } else {
-            let newWindow = window.open(url, name, 'toolbar=no,location=no, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
+            let newWindow = window.open(url, name, 'toolbar=no,location=yes, directories=no, status=yes, menubar=no, resizable=yes, copyhistory=no, scrollbars=no');
             const newWinObj = { [name]: newWindow }
             openedWindows = { ...openedWindows, ...newWinObj }
 
